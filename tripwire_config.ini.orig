@@ -1,4 +1,4 @@
-# Logs stored under name: "HoneypotLogger"
+# Logs stored under name: "TripwireLogger"
 # Honeypot Listen Pairs Format: <PORT>:<SERVICE>:<PROTOCOL>; <PORT>:<SERVICE>:<PROTOCOL>; ..
 
 [General]

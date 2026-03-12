@@ -13,7 +13,7 @@ import smtplib
 from email.message import EmailMessage
 from email.mime.text import MIMEText
 
-CONFIG_FILE = "honeypot_config.ini"
+CONFIG_FILE = "tripwire_config.ini"
 CONFIG_REQUIRED_SECTIONS = {
 	"General": ["client", "hostname", "allowed_ips"],
 	"Syslog": ["host", "port", "path"],
@@ -105,7 +105,7 @@ SERVICE_BANNERS = {
 		b'\x0d\x0a' # CRLF - RDP Negotiation Request (minimal)
 	),
 
-	"CustomBanner": b"220 Honeypot Service V1.0 Ready\r\n",
+	"CustomBanner": b"220 Tripwire Service V1.0 Ready\r\n",
 }
 
 app_config = {}
@@ -114,7 +114,7 @@ last_mail_alert = 0
 
 def display_banner():
 	print(Fore.YELLOW + "+----------------------------+" + Style.RESET_ALL)
-	print(Fore.YELLOW + "|          HONEYPOT          |" + Style.RESET_ALL)
+	print(Fore.YELLOW + "|          TRIPWIRE          |" + Style.RESET_ALL)
 	print(Fore.YELLOW + "+----------------------------+" + Style.RESET_ALL)
 
 class Utility:
@@ -355,7 +355,7 @@ class Persistence:
 		script_path = os.path.abspath(__file__)
 		script_dir = os.path.dirname(script_path)
 		python_path = sys.executable
-		service_name = "honeyjar"
+		service_name = "tripwire"
 		service_file_path = f"/etc/systemd/system/{service_name}.service"
 		
 		print(Fore.BLUE + "[INF]" + Style.BRIGHT + f" Detected Script Path: {script_path}" + Style.RESET_ALL)
@@ -363,7 +363,7 @@ class Persistence:
 		print("")
 
 		service_content = f"""[Unit]
-Description=HoneyJar Honeypot Service
+Description=Tripwire Honeypot Service
 After=network.target syslog.service
 
 [Service]
@@ -492,12 +492,12 @@ class Syslog:
 
 	@staticmethod
 	def setup_syslog_logger(config):
-		global honeypot_logger
+		global tripwire_logger
 		
 		syslog_host = config['syslog_host']
 		syslog_port = int(config['syslog_port'])
 		
-		logger = logging.getLogger('HoneypotLogger')
+		logger = logging.getLogger('TripwireLogger')
 		logger.setLevel(logging.INFO)
 		
 		# Prevent logging messages from duplicating via the root handler
@@ -510,7 +510,7 @@ class Syslog:
 			handler.setFormatter(formatter)
 			logger.addHandler(handler)
 			
-			honeypot_logger = logger
+			tripwire_logger = logger
 			print(Fore.GREEN + "[SUC]" + Style.RESET_ALL + f" Syslog logging initialised at {syslog_host}:{syslog_port}.")
 			return logger
 			
@@ -693,8 +693,8 @@ class TcpHoneypot:
 		
 		# Check Allowlist
 		if attacker_ip in app_config.get('general_allowed_ips', []):
-			if honeypot_logger:
-				honeypot_logger.debug(f"Connection ignored from allowed IP. IP={attacker_ip} Port={target_port}")
+			if tripwire_logger:
+				tripwire_logger.debug(f"Connection ignored from allowed IP. IP={attacker_ip} Port={target_port}")
 			
 			writer.close()
 			await writer.wait_closed()
@@ -732,8 +732,8 @@ class TcpHoneypot:
 				captured_data_log = "CapturedData='Binary/Undecodable Bytes'"
 		
 		# Log the event
-		if honeypot_logger:
-			honeypot_logger.info(log_message + captured_data_log, extra={'target_port': target_port, 'source_ip': attacker_ip})
+		if tripwire_logger:
+			tripwire_logger.info(log_message + captured_data_log, extra={'target_port': target_port, 'source_ip': attacker_ip})
 			print(Fore.YELLOW + "[HIT]" + Style.RESET_ALL + " Event occurred: " + log_message)
 		else:
 			print(Fore.RED + "[ERR] " + Style.RESET_ALL + log_message)
@@ -758,8 +758,8 @@ class UdpHoneypot(asyncio.DatagramProtocol):
 
 		# Check Allowlist
 		if attacker_ip in app_config.get('general_allowed_ips', []):
-			if honeypot_logger:
-				honeypot_logger.debug(f"Datagram ignored from allowed IP. IP={attacker_ip} Port={self.target_port}")
+			if tripwire_logger:
+				tripwire_logger.debug(f"Datagram ignored from allowed IP. IP={attacker_ip} Port={self.target_port}")
 			return
 
 		log_message = f"UDP datagram received. TargetPort={self.target_port} SourceIP={attacker_ip}"
@@ -769,8 +769,8 @@ class UdpHoneypot(asyncio.DatagramProtocol):
 		except UnicodeDecodeError:
 			captured_data_log = f" CapturedData='Binary/Undecodable Bytes'"
 
-		if honeypot_logger:
-			honeypot_logger.info(log_message + captured_data_log)
+		if tripwire_logger:
+			tripwire_logger.info(log_message + captured_data_log)
 			print(Fore.YELLOW + "[HIT]" + Style.RESET_ALL + " Event occurred: " + log_message)
 		else:
 			print(Fore.RED + "[ERR]" + Style.RESET_ALL + log_message)
@@ -855,7 +855,7 @@ def main_menu():
 			return
 
 		print("\n" + Fore.YELLOW + "+----------------------------+" + Style.RESET_ALL)
-		print(Fore.YELLOW + "|          HONEYPOT          |" + Style.RESET_ALL)
+		print(Fore.YELLOW + "|          TRIPWIRE          |" + Style.RESET_ALL)
 		print(Fore.YELLOW + "+----------------------------+" + Style.RESET_ALL)
 		print("")
 		Utility.check_privileges()
