@@ -45,6 +45,12 @@ SERVICE_BANNERS = {
 	# Basic Linux Telnet daemon banner
 	"Telnet_Linux_Simple": b"Welcome to the Telnet Server.\r\n", 
 
+	# --- SMTP :25 ---
+	"SMTP_Error": (b"E\x00\x00\x00_SFATAL\x00C28000\x00Mno pg_hba.conf entry for host \"127.0.0.1\", user \"postgres\", database \"postgres\", SSL off\r\n"),
+	"SMTP_Generic": (b"220 smtp.provider.net ESMTP Service Ready\r\n"),
+	"SMTP_Postfix_Ubuntu": (b"220 mail.example.com ESMTP Postfix (Ubuntu)\r\n"),
+	"SMTP_Microsoft_Exchange": (b"220 EXCH01.contoso.local Microsoft ESMTP MAIL Service ready at Wed, 10 Dec 2025 14:22:01 -0500\r\n"),
+
 	# --- HTTP :80/443 ---
 	# Nginx
 	"HTTP_Nginx_Current": (
@@ -104,6 +110,12 @@ SERVICE_BANNERS = {
 		b'\x00\x00' # Class
 		b'\x0d\x0a' # CRLF - RDP Negotiation Request (minimal)
 	),
+
+	# --- PostgreSQL :5432 ---
+	"PostgreSQL_Error": (b"E\x00\x00\x00_SFATAL\x00C28000\x00Mno pg_hba.conf entry for host \"127.0.0.1\", user \"postgres\", database \"postgres\", SSL off\r\n"),
+
+	# --- VNC :5900 ---
+	"VNC_Error": (b"RFB 003.003\r\n"),
 
 	"CustomBanner": b"220 Tripwire Service V1.0 Ready\r\n",
 }

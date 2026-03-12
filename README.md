@@ -7,13 +7,14 @@ This tool will not simulate a full operating system to let you monitor threat ac
 ## Capabilities
 
 - **Multi-Protocol Support**: Simultaneous listening on multiple TCP and UDP ports.
-- **Service Simulation**: High-fidelity banners and handshake simulations for common services:
+- **Service Simulation**: Service banner simulations for common services:
   - **FTP**: ProFTPD, Microsoft FTP, VSFTPD.
   - **SSH**: Ubuntu OpenSSH, CentOS OpenSSH.
   - **Telnet**: Cisco IOS, Linux.
+  - **SMTP**: Postfix (Ubuntu), Microsoft Exchange.
   - **HTTP/HTTPS**: Nginx, Apache.
-  - **Databases**: MySQL 8.0 Handshake.
-  - **Infrastructure**: SMB (Windows Server), RDP.
+  - **Databases**: MySQL 8.0, PostgreSQL.
+  - **Infrastructure**: SMB (Windows Server), RDP, VNC.
 - **Interactive Configuration**: Built-in CLI tool for editing settings and viewing available service banners.
 - **Advanced Logging**:
   - **Syslog**: Integration with `rsyslog` for centralized logging.
