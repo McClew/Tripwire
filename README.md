@@ -17,7 +17,7 @@ This tool will not simulate a full operating system to let you monitor threat ac
   - **Infrastructure**: SMB (Windows Server), RDP, VNC.
 - **Interactive Configuration**: Built-in CLI tool for editing settings and viewing available service banners.
 - **Advanced Logging**:
-  - **Syslog**: Integration with `rsyslog` for centralized logging.
+  - **Syslog**: Integration with `rsyslog` for centralised logging.
   - **Tripwire Alerts**: Instant email notifications when a connection is detected (with cooldown protection).
 - **EDR Integration**: Direct links to Infocyte EDR client locations for rapid incident response.
 - **Persistence**: Easily install as a `systemd` service on Linux for automatic start on boot.
@@ -32,7 +32,7 @@ This tool will not simulate a full operating system to let you monitor threat ac
   ```bash
   pip install colorama
   ```
-- **OS**: While Tripwire includes some cross-platform support, it is optimized for **Ubuntu/Linux** (especially for Syslog and Persistence features).
+- **OS**: While Tripwire includes some cross-platform support, it is optimised for **Ubuntu/Linux** (especially for Syslog and Persistence features).
 
 ### 1. Configuration
 
